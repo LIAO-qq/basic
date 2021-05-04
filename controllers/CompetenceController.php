@@ -8,6 +8,8 @@ use app\models\CompetenceSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
+
 
 /**
  * CompetenceController implements the CRUD actions for Competence model.
@@ -67,6 +69,16 @@ class CompetenceController extends Controller
         $model = new Competence();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            //get the instance of the uploaded file
+            $imageName = $model->Libelle_Competence;
+            $model->file = UploadedFile::getInstance($model,'file');
+            $model->file->saveAs('uploads/'.$imageName.'.'.$model->file->extension);
+
+            //save the path in the db colum
+            $model->image = 'uploads/'.$imageName.'.'.$model->file->extension;
+
+
+
             return $this->redirect(['view', 'id' => $model->Num_Competence]);
         }
 
