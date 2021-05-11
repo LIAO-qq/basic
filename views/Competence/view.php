@@ -26,6 +26,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 'method' => 'post',
             ],
         ]) ?>
+
+        <?= Html::a('Generate PDF', ['gen-pdf', 'id' => $model->Num_Competence], ['class' => 'btn btn-primary']) ?>
     </p>
 
     <?= DetailView::widget([

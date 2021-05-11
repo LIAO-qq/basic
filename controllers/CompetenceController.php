@@ -9,6 +9,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
+use mPDF;
 
 
 /**
@@ -19,6 +20,27 @@ class CompetenceController extends Controller
     /**
      * {@inheritdoc}
      */
+
+    /**public function actionCreateMPDF(){
+        $mpdf=new mPDF();
+        $mpdf->WriteHTML($this->renderPartial('mpdf'));
+        $mpdf->Output();
+        exit;
+        //return $this->renderPartial('mpdf');
+    }
+    public function actionSamplePdf() {
+        $mpdf = new mPDF;
+        $mpdf->WriteHTML('Sample Text');
+        $mpdf->Output();
+        exit;
+    }
+    public function actionForceDownloadPdf(){
+        $mpdf=new mPDF();
+        $mpdf->WriteHTML($this->renderPartial('mpdf'));
+        $mpdf->Output('MyPDF.pdf', 'D');
+        exit;
+    }
+     * */
     public function behaviors()
     {
         return [
@@ -59,6 +81,18 @@ class CompetenceController extends Controller
         ]);
     }
 
+    public function actionGenPdf($id)
+    {
+        $pdf_content = $this ->renderPartial('view-pdf',[
+           'model' => $this ->findModel($id),
+        ]);
+        $mpdf = new \Mpdf\Mpdf();
+        $mpdf->WriteHTML($pdf_content);
+        $mpdf->Output();
+        exit;
+
+    }
+
     /**
      * Creates a new Competence model.
      * If creation is successful, the browser will be redirected to the 'view' page.
@@ -86,14 +120,6 @@ class CompetenceController extends Controller
             'model' => $model,
         ]);
     }
-    //get the instance of the uploaded file
-    /** $imageName = $model->Libelle_Competence;
-    $model->file = UploadedFile::getInstance($model,'file');
-    $model->file->saveAs('uploads/'.$imageName.'.'.$model->file->extension);
-
-    //save the path in the db colum
-    $model->image = 'uploads/'.$imageName.'.'.$model->file->extension;**/
-
 
     /**
      * Updates an existing Competence model.
