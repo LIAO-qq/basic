@@ -68,15 +68,15 @@ class CompetenceController extends Controller
     {
         $model = new Competence();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            //get the instance of the uploaded file
-            $imageName = $model->Libelle_Competence;
-            $model->file = UploadedFile::getInstance($model,'file');
-            $model->file->saveAs('uploads/'.$imageName.'.'.$model->file->extension);
+        if ($model->load(Yii::$app->request->post())) {
+            $model->save();
 
-            //save the path in the db colum
-            $model->image = 'uploads/'.$imageName.'.'.$model->file->extension;
-
+            $imageId = $model->Num_Competence;
+            $image = UploadedFile::getInstance($model,'image');
+            $imageName = 'image_'.$imageId.'.'.$image->getExtension();
+            $image->saveAs(Yii::getAlias('@imagePath').'/'.$imageName);
+            $model->image = $imageName;
+            $model->save();
 
 
             return $this->redirect(['view', 'id' => $model->Num_Competence]);
@@ -86,6 +86,14 @@ class CompetenceController extends Controller
             'model' => $model,
         ]);
     }
+    //get the instance of the uploaded file
+    /** $imageName = $model->Libelle_Competence;
+    $model->file = UploadedFile::getInstance($model,'file');
+    $model->file->saveAs('uploads/'.$imageName.'.'.$model->file->extension);
+
+    //save the path in the db colum
+    $model->image = 'uploads/'.$imageName.'.'.$model->file->extension;**/
+
 
     /**
      * Updates an existing Competence model.

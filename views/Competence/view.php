@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
+
 /* @var $this yii\web\View */
 /* @var $model app\models\Competence */
 
@@ -10,6 +11,7 @@ $this->title = $model->Num_Competence;
 $this->params['breadcrumbs'][] = ['label' => 'Competences', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
+
 ?>
 <div class="competence-view">
 
@@ -31,6 +33,11 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'Num_Competence',
             'Libelle_Competence',
+            [
+                    'attribute' =>'image',
+                     'value' => Yii::getAlias('@imageUrl').'/'.$model ->image,
+                     'format' =>['image',['width' => '100','height' => '100']]
+            ]
         ],
     ]) ?>
 

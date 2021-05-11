@@ -8,6 +8,8 @@ use yii\helpers\Html;
 $this->title = 'Créer une Competence';
 $this->params['breadcrumbs'][] = ['label' => 'Competences', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
+
+
 ?>
 <div class="competence-create">
 

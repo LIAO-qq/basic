@@ -28,8 +28,14 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'Num_Competence',
             'Libelle_Competence',
-
             ['class' => 'yii\grid\ActionColumn'],
+
+
+
+           /**'value' => function ($model) {
+                return Html::a($model->img_path,'http://localhost/basic/web/uploads/Libelle_Competence'."$model->img_path",["target" => "_blank"]);
+            },
+            'format' => 'raw'**/
         ],
     ]); ?>
 
